@@ -42,6 +42,8 @@ dependencies:
   flutter_local_notifications: ^13.0.0
   intl: ^0.18.0
   mailer: ^6.0.0
+  fluttertoast: ^8.1.3
+
 
 
 
