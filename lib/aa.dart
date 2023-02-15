@@ -31,7 +31,7 @@ sendMail() async {
     ..from = Address(username, 'Rabie Zouita')
     ..recipients.add('rabie.zouita@esprit.tn')
     //..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
-   // ..bccRecipients.add(Address('bccAddress@example.com'))
+    // ..bccRecipients.add(Address('bccAddress@example.com'))
     ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
     ..text = 'This is the plain text.\nThis is line 2 of the text part.'
     ..html = "<h1>Test</h1>\n<p>t7che</p>";
@@ -61,20 +61,15 @@ class _MainScreenState extends State<MainScreen> {
   var _connectivityResult = ConnectivityResult.none;
   String counter;
   bool ledOn = true;
+  bool ventil = true;
   String sensorReading;
   double temperature;
   double humidity;
   final dataBase = FirebaseDatabase.instance.reference();
 
-
-
   @override
   void initState() {
     super.initState();
-    
-  
-
-
 
     currentTime = getCurrentDateTime();
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -87,7 +82,6 @@ class _MainScreenState extends State<MainScreen> {
         _connectivityResult = result;
       });
     });
-   
   }
 
   @override
@@ -98,8 +92,6 @@ class _MainScreenState extends State<MainScreen> {
 
   _MainScreenState() {
     dataBase.child('Air/humidity').once().then((snap) {}).then((value) {
-   
-
       setState(() {});
     });
     dataBase.child('wifi/-Mq60v5w68GZEKuKEN7D').onChildChanged.listen((event) {
@@ -147,18 +139,17 @@ class _MainScreenState extends State<MainScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("System is off ", style: TextStyle(fontSize: 20, color: Colors.red)),
+              Text("System is off ",
+                  style: TextStyle(fontSize: 20, color: Colors.red)),
               Image(
                   image: AssetImage('assets/images/a.gif'), fit: BoxFit.cover),
               SizedBox(height: 40, width: 40),
               TextButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.red),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
                 ),
                 onPressed: () async {
                   sendMail();
-
                 },
                 child: Text(
                   'Contact Administrateur',
@@ -179,18 +170,17 @@ class _MainScreenState extends State<MainScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("System is off ", style: TextStyle(fontSize: 20, color: Colors.red)),
+              Text("System is off ",
+                  style: TextStyle(fontSize: 20, color: Colors.red)),
               Image(
                   image: AssetImage('assets/images/a.gif'), fit: BoxFit.cover),
               SizedBox(height: 40, width: 40),
               TextButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.red),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
                 ),
                 onPressed: () async {
-                sendMail();
-
+                  sendMail();
                 },
                 child: Text(
                   'Contact Administrateur',
@@ -247,6 +237,27 @@ class _MainScreenState extends State<MainScreen> {
               },
               child: Text(
                 ledOn ? "Led OFF" : "LED on",
+                style: TextStyle(fontSize: 25),
+              )),
+          TextButton(
+              style: ButtonStyle(
+                  padding:
+                  MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                    ventil ? Colors.red : Colors.green,
+                  ),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(
+                              color: ventil ? Colors.red : Colors.green)))),
+              onPressed: () {
+                ventil = !ventil;
+                dataBase.child('ESP/nom/led').set(ventil ? "OFF" : 'ON');
+                setState(() {});
+              },
+              child: Text(
+                ventil ? "ventilateur OFF" : "ventilateur on",
                 style: TextStyle(fontSize: 25),
               )),
           SizedBox(
