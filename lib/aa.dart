@@ -17,8 +17,8 @@ String getCurrentDateTime() {
 }
 
 sendMail() async {
-  String username = '';
-  String password = '';
+  String username = 'rabie.zouita@esprit.tn';
+  String password = '120997rabie120997';
 
   final smtpServer = gmail(username, password);
   // Use the SmtpServer class to configure an SMTP server:
@@ -32,9 +32,9 @@ sendMail() async {
     ..recipients.add('rabie.zouita@esprit.tn')
     //..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
     // ..bccRecipients.add(Address('bccAddress@example.com'))
-    ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
+    ..subject = 'Alert  :: 😀 :: ${DateTime.now()}'
     ..text = 'This is the plain text.\nThis is line 2 of the text part.'
-    ..html = "<h1>Test</h1>\n<p>t7che</p>";
+    ..html = "<h1>Serre </h1>\n<p>En panne</p>";
 
   try {
     final sendReport = await send(message, smtpServer);
@@ -63,7 +63,8 @@ class _MainScreenState extends State<MainScreen> {
   bool ledOn = true;
   bool ventil = true;
   String sensorReading;
-  double temperature;
+  double temperature = 25;
+  int battrie = 21;
   double humidity;
   final dataBase = FirebaseDatabase.instance.reference();
 
@@ -102,13 +103,25 @@ class _MainScreenState extends State<MainScreen> {
       }
     });
 
+
+
+       dataBase.child('EtatBattrie/').onChildChanged.listen((event) {
+      DataSnapshot snap = event.snapshot;
+      if (snap.key == 'Status') {
+        battrie = snap.value;
+        setState(() {});
+      }
+    });
+
+
+
     dataBase.child('Air/').onChildChanged.listen((event) {
       DataSnapshot snap = event.snapshot;
       if (snap.key == 'humidity') {
         humidity = snap.value;
         setState(() {});
       }
-      if (snap.key == 'temp') {
+      if (snap.key == 'temperature') {
         temperature = snap.value;
         setState(() {});
       }
@@ -193,13 +206,25 @@ class _MainScreenState extends State<MainScreen> {
       );
     }
 
-    if (temperature == 20.1) {
+    if (temperature < 20.1) {
       return Container(
         child: Image(
           image: AssetImage('assets/images/bb.jpg'),
+          
         ),
+        
       );
     }
+    if (battrie < 20) {
+      return Container(
+        child: Image(
+          image: AssetImage('assets/images/battry.png'),
+          
+        ),
+        
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.home),
@@ -208,8 +233,13 @@ class _MainScreenState extends State<MainScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // image de la serre 
+          Image(
+            image: AssetImage('assets/images/0.png'),
+            fit: BoxFit.cover,
+          ),
           Text(
-            'Control Your Devices',
+            'AgroControl',
             style: TextStyle(
                 color: Colors.blueGrey,
                 fontSize: 35,
@@ -218,48 +248,8 @@ class _MainScreenState extends State<MainScreen> {
           SizedBox(
             height: 20,
           ),
-          TextButton(
-              style: ButtonStyle(
-                  padding:
-                      MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                    ledOn ? Colors.red : Colors.green,
-                  ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(
-                              color: ledOn ? Colors.red : Colors.green)))),
-              onPressed: () {
-                ledOn = !ledOn;
-                dataBase.child('ESP/led/status').set(ledOn ? "OFF" : 'ON');
-                setState(() {});
-              },
-              child: Text(
-                ledOn ? "Led OFF" : "LED on",
-                style: TextStyle(fontSize: 25),
-              )),
-          TextButton(
-              style: ButtonStyle(
-                  padding:
-                  MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                    ventil ? Colors.red : Colors.green,
-                  ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(
-                              color: ventil ? Colors.red : Colors.green)))),
-              onPressed: () {
-                ventil = !ventil;
-                dataBase.child('ESP/nom/led').set(ventil ? "OFF" : 'ON');
-                setState(() {});
-              },
-              child: Text(
-                ventil ? "ventilateur OFF" : "ventilateur on",
-                style: TextStyle(fontSize: 25),
-              )),
+       
+        
           SizedBox(
             height: 20,
           ),
@@ -267,7 +257,7 @@ class _MainScreenState extends State<MainScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '',
+                'time : ',
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               SizedBox(
@@ -282,50 +272,8 @@ class _MainScreenState extends State<MainScreen> {
               )
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'temperature',
-                style: TextStyle(
-                    color: Colors.blueGrey,
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                '$temperature' + "C°",
-                style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'humidity',
-                style: TextStyle(
-                    color: Colors.amberAccent,
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                '$humidity' + '%',
-                style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
+        
+        
         ],
       ),
     );
