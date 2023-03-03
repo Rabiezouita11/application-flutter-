@@ -177,7 +177,7 @@ class _MainScreenState extends State<MainScreen> {
     DateTime sensorDateTime = DateTime.parse(sensorReading);
     Duration difference =
         DateTime.parse(currentTime).difference(sensorDateTime);
-    if (difference.inSeconds >= 10) {
+    if (difference.inSeconds >= 20) {
       return Scaffold(
         body: Center(
           child: Column(
