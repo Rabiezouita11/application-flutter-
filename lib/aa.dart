@@ -18,7 +18,7 @@ String getCurrentDateTime() {
 
 sendMail() async {
   String username = 'rabie.zouita@esprit.tn';
-  String password = '120997rabie120997';
+  String password = '120997rabie';
 
   final smtpServer = gmail(username, password);
   // Use the SmtpServer class to configure an SMTP server:
@@ -63,9 +63,12 @@ class _MainScreenState extends State<MainScreen> {
   bool ledOn = true;
   bool ventil = true;
   String sensorReading;
-  double temperature = 25;
+  double temperature = 0;
   int battrie = 21;
   double humidity;
+  double temperatureMax = 0;
+  double temperatureMin = 0;
+
   final dataBase = FirebaseDatabase.instance.reference();
 
   @override
@@ -102,6 +105,24 @@ class _MainScreenState extends State<MainScreen> {
         setState(() {});
       }
     });
+
+
+       dataBase.child('culture/air/temperature').onChildChanged.listen((event) {
+      DataSnapshot snap = event.snapshot;
+      if (snap.key == 'MaxT') {
+        temperatureMax = snap.value;
+        setState(() {});
+      }
+    });
+
+      dataBase.child('culture/air/temperature').onChildChanged.listen((event) {
+      DataSnapshot snap = event.snapshot;
+      if (snap.key == 'MinT') {
+        temperatureMin = snap.value;
+        setState(() {});
+      }
+    });
+
 
 
 
@@ -206,10 +227,20 @@ class _MainScreenState extends State<MainScreen> {
       );
     }
 
-    if (temperature < 20.1) {
+    if (temperature >= temperatureMax) {
       return Container(
         child: Image(
-          image: AssetImage('assets/images/bb.jpg'),
+          image: AssetImage('assets/images/tempMax.gif'),
+          
+        ),
+        
+      );
+    }
+    
+    if (temperature <= temperatureMin) {
+      return Container(
+        child: Image(
+          image: AssetImage('assets/images/tempLow.gif'),
           
         ),
         
