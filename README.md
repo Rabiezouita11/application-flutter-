@@ -2,18 +2,30 @@
 
 A new Flutter project.
 
-## Getting Started
+## Description du projet:
+Chers membres de la communauté LinkedIn, 🔔
 
-This project is a starting point for a Flutter application.
+Je suis ravi de partager avec vous mon projet passionnant sur lequel je travaille actuellement. Il s'agit de la création d'une application web e-commerce pour une serre intelligente.
 
-A few resources to get you started if this is your first Flutter project:
+L'objectif principal de ce projet est de permettre aux agriculteurs d'acheter des serres intelligentes en ligne, en proposant une plateforme conviviale et facile à utiliser. L'application comprendra un panier d'achat, un système de paiement en ligne sécurisé et une gestion des commandes pour offrir une expérience d'achat fluide.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+En parallèle, nous développons également un tableau de bord de contrôle intégré à l'application web. Ce tableau de bord permettra aux agriculteurs de surveiller et de contrôler les paramètres de croissance des plantes (npk), tels que la température, l'humidité, l'éclairage, et bien d'autres. Pour cela, nous utilisons Angular 13 pour développer une interface utilisateur réactive et intuitive.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+De plus, nous sommes en train de concevoir et de construire un prototype de serre intelligente qui utilisera des capteurs, des actionneurs et l'Internet des objets (IoT). Les capteurs surveilleront les conditions environnementales de la serre, tandis que les actionneurs permettront de réguler automatiquement les paramètres internes, comme l'éclairage ou l'arrosage. Nous utilisons des technologies telles que l'Arduino pour gérer les capteurs et les actionneurs.
+
+En parallèle de l'application web, nous développons également une application Flutter dédiée aux agriculteurs. Cette application mobile leur permettra de surveiller en temps réel l'état de la serre intelligente et de recevoir des notifications en cas de problèmes détectés, comme des températures anormales ou une humidité excessive.
+
+Dans le cadre de ce projet, nous prévoyons également d'implémenter un système de quiz pour évaluer les connaissances des agriculteurs. Des récompenses seront accordées aux agriculteurs obtenant de bons résultats, afin de les encourager et de les motiver dans leur pratique.
+
+Enfin, nous développerons une interface d'administration pour les administrateurs du site web. Cette interface leur permettra de gérer les avis des agriculteurs, les commandes, les utilisateurs, ainsi que de surveiller les statistiques du site.
+
+Si vous souhaitez en savoir plus sur ce projet et suivre son évolution, je vous invite à consulter l'URL suivante : https://lnkd.in/et5gzmEH. Vous y trouverez les détails et les avancées du projet.
+
+N'hésitez pas à me contacter si vous avez des questions supplémentaires ou si vous souhaitez partager vos avis et suggestions. Je serais ravi d'échanger avec vous.
+
+Vous pouvez également consulter ma présentation visuelle du projet ici : Lien de la présentation : https://lnkd.in/e4miwrWS
+
+#iot #ecommerce #tableau #flutter #angular #nodejs #opportunite #OpenToWork
 
 
 ## Demo 
